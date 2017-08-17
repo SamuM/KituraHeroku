@@ -22,3 +22,10 @@ let package = Package(
 ])
 ```
 
+- Create Heroku Project
+- Add PostgreSQL to the project
+- Edit Main.Swift file
+- Establish PostgreSQL Connection
+- Create function to create the chicken
+- Create function to fetch all the chikens
+- Create function to fetch one chicken?
