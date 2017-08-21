@@ -71,6 +71,43 @@ Before we can push the project to heroku we need to create a ```Procfile``` to t
 After creating the Procfile we need to run a command to define what buildback we want to use with our Heroku. Run this on Terminal 
 ```heroku buildpacks:set https://github.com/kylef/heroku-buildpack-swift.git```
 
+Heroku uses different port than our default 8080 so we need to listen for Herokus port of choice from our ```Main.swift```file where we add the import for Foundation and the code to specify the port used.
+
+Modifie ```Main.swift```to look like this:
+
+```swift
+import Foundation
+import Kitura
+import HeliumLogger
+
+// Create a new router
+let router = Router()
+
+// Handle HTTP GET requests to /
+router.get("/") {
+    request, response, next in
+    response.send("Hello, World!")
+    next()
+}
+
+// Define app to use different port when used from Heroku.
+
+let port: Int
+let defaultPort = 8080
+
+if let herokuPort = ProcessInfo.processInfo.environment["PORT"] {
+    port = Int(herokuPort) ?? defaultPort
+} else {
+    port = defaultPort
+}
+
+// Add an HTTP server and connect it to the router
+Kitura.addHTTPServer(onPort: port, with: router)
+
+// Start the Kitura runloop (this call never returns)
+Kitura.run()
+```
+
 Using the CLI lets follow the Herokus own instructions on the page.
 
 - Open Terminal and navigate to the project folder. Login to Heroku with ```heroku login``` and enter your accounts credentials.
