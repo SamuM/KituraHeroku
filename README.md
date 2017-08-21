@@ -117,12 +117,16 @@ Using the CLI lets follow the Herokus own instructions on the page.
 
 ## Adding PostgreSQL to the project
 
-Now that we have our app runnig in Heroku we can concentrate on developing it further, meaning next we will add PostgreSQL to it.
+Now that we have our app running in Heroku we can concentrate on developing it further, meaning next we will add PostgreSQL to it. And this we will do from the Heroku dashboard.
 
 - Navigate to your Heroku dashboard https://dashboard.heroku.com and open your Kitura running application.
 - Open ```Resources``` tab from the project navigation adn type ```postgres```on the 'Add-ons' search box and Select 'Heroku Postgres'. Choose the free tier Hobby Dev plan and add it to the project.
-- For future reference. Clicking the newly added database we can open the database configuration window on a new tab in our browser.
-
+- Click the newly added database to open its controll panel in a new tab.
+- Scroll down to 'ADMINISTRATION' and click 'Database Credentials'.
+- Copy the heroku command labeled 'Heroku CLI'. This command logs us in to our newly created Database.
+- Open new tab in Terminal and paste & run the command.
+- Now we can run queries and such to the Database. For now we are going to create our first table.
+- Run this command to create our table for chickens: ```sql CREATE TABLE chickentable (id SERIAL, name varchar(256) NOT NULL, destiny varchar(256) NOT NULL);```
 
 - Edit Main.Swift file
 
