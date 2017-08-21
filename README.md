@@ -62,23 +62,67 @@ Kitura.run()
 
 ## Heroku integration
 
-Now we can create our Heroku project. Navigate to your Heroku Dashboard: https://dashboard.heroku.com/apps. There click the 'New – Create new pp'-button. You can choose a name for your project but that is not needed for this project. YOu can also choose whatever region works for you the best.
+Now we can create our Heroku project. Navigate to your Heroku Dashboard: https://dashboard.heroku.com/apps. There click the 'New – Create new app'-button. You can choose a name for your project but that is not needed for this project. YOu can also choose whatever region works for you the best.
 
-Now you should be seeing the instructions of how to add Heroku git to your project with the help of Heroku CLI – that should already be installed for you (if not, install it now: https://devcenter.heroku.com/articles/heroku-cli). Heroku also allows you to run the code to the server through GitHub or DropBox. If you prefer those I see no reason why those wouldnät work for this tutorial, but I prefer using  heroku through the CLI.
+Now you should be seeing the instructions of how to add Heroku git to your project with the help of Heroku CLI – that should already be installed for you (if not, install it now: https://devcenter.heroku.com/articles/heroku-cli). Heroku also allows you to run the code to the server through GitHub or DropBox. If you prefer those I see no reason why those wouldn't work for this tutorial, but I prefer using  heroku through the CLI.
 
-Before we can push the project to heroku we need to create a ```Procfile``` to the root of the project. Create the file and add ```web: HerokuKitura```to the file. 'HerokuKitura being your project name'.
+Before we can push the project to heroku we need to create a ```Procfile``` to the root of the project. Create the file and add ```web: KituraHeroku```to the file. 'HerokuKitura being your project name'.
 
 After creating the Procfile we need to run a command to define what buildback we want to use with our Heroku. Run this on Terminal 
 ```heroku buildpacks:set https://github.com/kylef/heroku-buildpack-swift.git```
+
+Heroku uses different port than our default 8080 so we need to listen for Herokus port of choice from our ```Main.swift```file where we add the import for Foundation and the code to specify the port used.
+
+Modifie ```Main.swift```to look like this:
+
+```swift
+import Foundation
+import Kitura
+import HeliumLogger
+
+// Create a new router
+let router = Router()
+
+// Handle HTTP GET requests to /
+router.get("/") {
+    request, response, next in
+    response.send("Hello, World!")
+    next()
+}
+
+// Define app to use different port when used from Heroku.
+
+let port: Int
+let defaultPort = 8080
+
+if let herokuPort = ProcessInfo.processInfo.environment["PORT"] {
+    port = Int(herokuPort) ?? defaultPort
+} else {
+    port = defaultPort
+}
+
+// Add an HTTP server and connect it to the router
+Kitura.addHTTPServer(onPort: port, with: router)
+
+// Start the Kitura runloop (this call never returns)
+Kitura.run()
+```
 
 Using the CLI lets follow the Herokus own instructions on the page.
 
 - Open Terminal and navigate to the project folder. Login to Heroku with ```heroku login``` and enter your accounts credentials.
 - Init the git project with ```git init```
 - Connect the git project to heroku with CLI ```heroku git:remote -a kitura-heroku-postgress```. 'kitura-heroku-postgress' being the name of your project. You can copy this line from your own instructions page.
-- Make sure you have committed the code to git by running ```git add .```, ```git commit -m "<message>"``` and the pushing it to heroku with ```git push heroku master```.
+- Make sure you have committed the code to git by running ```git add .```, ```git commit -m "<message>"``` and the pushing it to heroku with ```git push heroku master```. Launching the app on Heroku takes a while, but after Terminal gives you an new empty prompt you can open the application by running ```heroku open```. You should see your app running the same 'Hello, World!' text as we have seen previously.
 
-- Add PostgreSQL to the project
+## Adding PostgreSQL to the project
+
+Now that we have our app runnig in Heroku we can concentrate on developing it further, meaning next we will add PostgreSQL to it.
+
+- Navigate to your Heroku dashboard https://dashboard.heroku.com and open your Kitura running application.
+- Open ```Resources``` tab from the project navigation adn type ```postgres```on the 'Add-ons' search box and Select 'Heroku Postgres'. Choose the free tier Hobby Dev plan and add it to the project.
+- For future reference. Clicking the newly added database we can open the database configuration window on a new tab in our browser.
+
 
 - Edit Main.Swift file
 
