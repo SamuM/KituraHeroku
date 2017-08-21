@@ -66,6 +66,11 @@ Now we can create our Heroku project. Navigate to your Heroku Dashboard: https:/
 
 Now you should be seeing the instructions of how to add Heroku git to your project with the help of Heroku CLI – that should already be installed for you (if not, install it now: https://devcenter.heroku.com/articles/heroku-cli). Heroku also allows you to run the code to the server through GitHub or DropBox. If you prefer those I see no reason why those wouldnät work for this tutorial, but I prefer using  heroku through the CLI.
 
+Before we can push the project to heroku we need to create a ```Procfile``` to the root of the project. Create the file and add ```web: HerokuKitura```to the file. 'HerokuKitura being your project name'.
+
+After creating the Procfile we need to run a command to define what buildback we want to use with our Heroku. Run this on Terminal 
+```heroku buildpacks:set https://github.com/kylef/heroku-buildpack-swift.git```
+
 Using the CLI lets follow the Herokus own instructions on the page.
 
 - Open Terminal and navigate to the project folder. Login to Heroku with ```heroku login``` and enter your accounts credentials.
