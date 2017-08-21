@@ -113,9 +113,16 @@ Using the CLI lets follow the Herokus own instructions on the page.
 - Open Terminal and navigate to the project folder. Login to Heroku with ```heroku login``` and enter your accounts credentials.
 - Init the git project with ```git init```
 - Connect the git project to heroku with CLI ```heroku git:remote -a kitura-heroku-postgress```. 'kitura-heroku-postgress' being the name of your project. You can copy this line from your own instructions page.
-- Make sure you have committed the code to git by running ```git add .```, ```git commit -m "<message>"``` and the pushing it to heroku with ```git push heroku master```.
+- Make sure you have committed the code to git by running ```git add .```, ```git commit -m "<message>"``` and the pushing it to heroku with ```git push heroku master```. Launching the app on Heroku takes a while, but after Terminal gives you an new empty prompt you can open the application by running ```heroku open```. You should see your app running the same 'Hello, World!' text as we have seen previously.
 
-- Add PostgreSQL to the project
+## Adding PostgreSQL to the project
+
+Now that we have our app runnig in Heroku we can concentrate on developing it further, meaning next we will add PostgreSQL to it.
+
+- Navigate to your Heroku dashboard https://dashboard.heroku.com and open your Kitura running application.
+- Open ```Resources``` tab from the project navigation adn type ```postgres```on the 'Add-ons' search box and Select 'Heroku Postgres'. Choose the free tier Hobby Dev plan and add it to the project.
+- For future reference. Clicking the newly added database we can open the database configuration window on a new tab in our browser.
+
 
 - Edit Main.Swift file
 
