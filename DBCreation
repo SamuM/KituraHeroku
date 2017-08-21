@@ -1,0 +1,7 @@
+// Create Chicken table
+
+CREATE TABLE usertable (
+	id SERIAL,
+	name varchar(256) NOT NULL,
+	destiny varchar(256) NOT NULL
+);
