@@ -1,3 +1,4 @@
+import Foundation
 import Kitura
 import HeliumLogger
 
@@ -9,6 +10,17 @@ router.get("/") {
     request, response, next in
     response.send("Hello, World!")
     next()
+}
+
+// Define app to use different port when used from Heroku.
+
+let port: Int
+let defaultPort = 8080
+
+if let herokuPort = ProcessInfo.processInfo.environment["PORT"] {
+    port = Int(herokuPort) ?? defaultPort
+} else {
+    port = defaultPort
 }
 
 // Add an HTTP server and connect it to the router
