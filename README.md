@@ -126,7 +126,10 @@ Now that we have our app running in Heroku we can concentrate on developing it f
 - Copy the heroku command labeled 'Heroku CLI'. This command logs us in to our newly created Database.
 - Open new tab in Terminal and paste & run the command.
 - Now we can run queries and such to the Database. For now we are going to create our first table.
-- Run this command to create our table for chickens: ```sql CREATE TABLE chickentable (id SERIAL, name varchar(256) NOT NULL, destiny varchar(256) NOT NULL);```
+- Run this command to create our table for chickens: 
+```sql 
+CREATE TABLE chickentable (id SERIAL, name varchar(256) NOT NULL, destiny varchar(256) NOT NULL);
+```
 
 - Edit Main.Swift file
 
