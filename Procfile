@@ -1,1 +1,1 @@
-web: HerokuKitura
+web: KituraHeroku
