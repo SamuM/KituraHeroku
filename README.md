@@ -30,8 +30,10 @@ Now you should be seeing the instructions of how to add Heroku git to your proje
 
 Using the CLI lets follow the Herokus own instructions on the page.
 
-- Open Terminal and navigate to the project folder. Login to Heroku with ```heroku login```
-- 
+- Open Terminal and navigate to the project folder. Login to Heroku with ```heroku login``` and enter your accounts credentials.
+- Init the git project with ```git init```
+- Connect the git project to heroku with CLI ```heroku git:remote -a kitura-heroku-postgress```. 'kitura-heroku-postgress' being the name of your project. You can copy this line from your own instructions page.
+- Make sure you have committed the code to git by running ```git add .```, ```git commit -m "<message>"``` and the pushing it to heroku with ```git push heroku master```.
 
 - Add PostgreSQL to the project
 - Edit Main.Swift file
