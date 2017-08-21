@@ -6,9 +6,9 @@
 
 Once you have the basic Kitura project up and running, an Heroku account set up and the Heroku CLI installed we will first mve the project to Heroku. After that we will add the needed packages to our project to use PostgreSQL and create a simple example app to walk you trhough the process of using PostgreSQL and Heroku with Kitura.
 
-Open the Package.Swift file and add Swift-Kuery-PostgreSQL and Kitura-Request packages to the project. Your file should look smething like this afterwards:
+Open the Package.Swift file and add ```Swift-Kuery-PostgreSQL``` and ```Kitura-Request``` packages to the project. Your file should look smething like this afterwards:
 ```swift
-// Package.Swift
+// Package.swift
 // swift-tools-version:3.1
 
 import PackageDescription
@@ -23,6 +23,37 @@ let package = Package(
 ])
 ```
 
+- After updating the package we can run ```swift package generate-xcodeproj```(this works if you are running OS X and Xcode. This generates xcodeproj file that allows you to use Xcode to edit the project with all the Xcode features. Note that this has to be run everytime you update your Packages-Swift file as it fetches the added packages.
+
+- Afterwards if you want to fetch latest version of packages you can run ```swift package fetch```
+
+- For now you just have the Kitura Hello World porgram on your ```Main.swift```file. If not here is the code:
+
+```swift
+// Main.swift
+
+import Kitura
+import HeliumLogger
+
+// Create a new router
+let router = Router()
+
+// Handle HTTP GET requests to /
+router.get("/") {
+    request, response, next in
+    response.send("Hello, World!")
+    next()
+}
+
+// Add an HTTP server and connect it to the router
+Kitura.addHTTPServer(onPort: 8080, with: router)
+
+// Start the Kitura runloop (this call never returns)
+Kitura.run()
+```
+
+- Run project locally https://medium.com/@m_ramsden/getting-started-with-kitura-on-heroku-3de8eae86335
+
 - Create Heroku Project
 Now we create our Heroku project. Navigate to your Heroku Dashboard: https://dashboard.heroku.com/apps. There click the 'New – Create new pp'-button. You can choose a name for your project but that is not needed for this project. YOu can also choose whatever region works for you the best.
 
@@ -36,8 +67,11 @@ Using the CLI lets follow the Herokus own instructions on the page.
 - Make sure you have committed the code to git by running ```git add .```, ```git commit -m "<message>"``` and the pushing it to heroku with ```git push heroku master```.
 
 - Add PostgreSQL to the project
+
 - Edit Main.Swift file
-- Establish PostgreSQL Connection
-- Create function to create the chicken
-- Create function to fetch all the chikens
-- Create function to fetch one chicken?
+
+    - Establish PostgreSQL Connection
+    - Create function to create the chicken
+    - Create function to fetch all the chikens
+    - Create function to fetch one chicken?
+    - Push to Heroku and emonstrate the results
