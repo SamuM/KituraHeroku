@@ -62,11 +62,11 @@ Kitura.run()
 
 ## Heroku integration
 
-Now we can create our Heroku project. Navigate to your Heroku Dashboard: https://dashboard.heroku.com/apps. There click the 'New – Create new pp'-button. You can choose a name for your project but that is not needed for this project. YOu can also choose whatever region works for you the best.
+Now we can create our Heroku project. Navigate to your Heroku Dashboard: https://dashboard.heroku.com/apps. There click the 'New – Create new app'-button. You can choose a name for your project but that is not needed for this project. YOu can also choose whatever region works for you the best.
 
-Now you should be seeing the instructions of how to add Heroku git to your project with the help of Heroku CLI – that should already be installed for you (if not, install it now: https://devcenter.heroku.com/articles/heroku-cli). Heroku also allows you to run the code to the server through GitHub or DropBox. If you prefer those I see no reason why those wouldnät work for this tutorial, but I prefer using  heroku through the CLI.
+Now you should be seeing the instructions of how to add Heroku git to your project with the help of Heroku CLI – that should already be installed for you (if not, install it now: https://devcenter.heroku.com/articles/heroku-cli). Heroku also allows you to run the code to the server through GitHub or DropBox. If you prefer those I see no reason why those wouldn't work for this tutorial, but I prefer using  heroku through the CLI.
 
-Before we can push the project to heroku we need to create a ```Procfile``` to the root of the project. Create the file and add ```web: HerokuKitura```to the file. 'HerokuKitura being your project name'.
+Before we can push the project to heroku we need to create a ```Procfile``` to the root of the project. Create the file and add ```web: KituraHeroku```to the file. 'HerokuKitura being your project name'.
 
 After creating the Procfile we need to run a command to define what buildback we want to use with our Heroku. Run this on Terminal 
 ```heroku buildpacks:set https://github.com/kylef/heroku-buildpack-swift.git```
