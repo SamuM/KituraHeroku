@@ -54,7 +54,9 @@ Kitura.addHTTPServer(onPort: 8080, with: router)
 Kitura.run()
 ```
 
-- Run project locally https://medium.com/@m_ramsden/getting-started-with-kitura-on-heroku-3de8eae86335
+- If you generated the Xcode project file you can run the code on Xcode by opening the project and running the target that looks like a Terminal icon on 'My Mac'. After Xcode finishesh building and compiling you can open a new browser window and navigate to http://localhost:8080/ that should display your 'Hello World!' text. 
+
+- You can also run the project from Terminal. In Terminal run ```swift build```. That obviously builds the project. Then run the file that is named after your project from ```.build/debug/<projectName>```. For example I would run my project like this ```.build/debug/KituraHeroku```. After Kitura starting you can navigate to http://localhost:8080/ just like with instance started  by Xcode.
 
 - Create Heroku Project
 Now we create our Heroku project. Navigate to your Heroku Dashboard: https://dashboard.heroku.com/apps. There click the 'New – Create new pp'-button. You can choose a name for your project but that is not needed for this project. YOu can also choose whatever region works for you the best.
