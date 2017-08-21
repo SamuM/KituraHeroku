@@ -6,6 +6,8 @@
 - If not already, signup for free tier Heroku account: https://www.heroku.com/
 - Follow instructions to install Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli
 
+## Setting up the basic project
+
 Once you have the basic Kitura project up and running, an Heroku account set up and the Heroku CLI installed we will first mve the project to Heroku. After that we will add the needed packages to our project to use PostgreSQL and create a simple example app to walk you trhough the process of using PostgreSQL and Heroku with Kitura.
 
 Open the Package.Swift file and add ```Swift-Kuery-PostgreSQL``` and ```Kitura-Request``` packages to the project. Your file should look smething like this afterwards:
@@ -58,8 +60,9 @@ Kitura.run()
 
 - You can also run the project from Terminal. In Terminal run ```swift build```. That obviously builds the project. Then run the file that is named after your project from ```.build/debug/<projectName>```. For example I would run my project like this ```.build/debug/KituraHeroku```. After Kitura starting you can navigate to http://localhost:8080/ just like with instance started  by Xcode.
 
-- Create Heroku Project
-Now we create our Heroku project. Navigate to your Heroku Dashboard: https://dashboard.heroku.com/apps. There click the 'New – Create new pp'-button. You can choose a name for your project but that is not needed for this project. YOu can also choose whatever region works for you the best.
+## Heroku integration
+
+Now we can create our Heroku project. Navigate to your Heroku Dashboard: https://dashboard.heroku.com/apps. There click the 'New – Create new pp'-button. You can choose a name for your project but that is not needed for this project. YOu can also choose whatever region works for you the best.
 
 Now you should be seeing the instructions of how to add Heroku git to your project with the help of Heroku CLI – that should already be installed for you (if not, install it now: https://devcenter.heroku.com/articles/heroku-cli). Heroku also allows you to run the code to the server through GitHub or DropBox. If you prefer those I see no reason why those wouldnät work for this tutorial, but I prefer using  heroku through the CLI.
 
