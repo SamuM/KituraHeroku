@@ -40,7 +40,6 @@ if let requestedHost = ProcessInfo.processInfo.environment["DATABASE_URL"] {
 Log.verbose("\(DBHost.absoluteURL)")
 let connection = PostgreSQLConnection(url: DBHost)
 
-
 // Handle HTTP GET requests to /
 router.get("/") {
     request, response, next in
@@ -50,29 +49,38 @@ router.get("/") {
 
 router.get("/addchicken/:name/:destiny") {
     request, response, next in
+        connection.connect { error in
+            if let error = error {
+                Log.verbose("Connection error: \(error)")
 
-    guard let name = request.parameters["name"],
-        let destiny = request.parameters["destiny"] else {
-            
-            Log.error("No parameters found")
-            try response.status(.badRequest).end()
-            return
-    }
-    let chickentable = ChickenTable()
+            } else {
+                guard let name = request.parameters["name"],
+                    let destiny = request.parameters["destiny"] else {
+                        
+                        Log.error("No parameters found")
+                        return
+                }
+                let chickentable = ChickenTable()
+                
+                let insertQuery = Insert(into: chickentable, values: name, destiny)
+                
+                connection.execute(query: insertQuery, onCompletion: { result in
+                    if result.success {
+                        response.send("We are DONE! \(result.asValue ?? "no value")")
+                    }
+                    Log.verbose("\(String(describing: result.asError))")
+                    next()
+                })
 
-    let insertQuery = Insert(into: chickentable, values: name, destiny)
-    
-    connection.execute(query: insertQuery, onCompletion: { result in
-        if result.success {
-            response.send("We are DONE! \(result.asValue ?? "no value")")
+            }
         }
-        Log.verbose("\(String(describing: result.asError))")
-        next()
-    })
+
+    
 
     //response.send("Hi! My name is \(name) and when I grow up I'm going to be an \(destiny)!")
    // next()
 }
+
 
 // Define app to use different port when used from Heroku.
 
