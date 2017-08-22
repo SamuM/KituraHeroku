@@ -153,9 +153,74 @@ HeliumLogger.use()
 If you are using the Xcode you should see the autocomplete working just like with regular projects.
 If you now build and run the project you can see that we have some more verbose information coming from the server.
 
-- Edit Main.Swift file
+Next we will set up the project so that we can connect to local or remote Heroku database depending on where the application is running.
 
-    - Establish PostgreSQL Connection
+Modifie your Main.swift file to look like this:
+
+```swift
+import Foundation
+import Kitura
+import HeliumLogger
+import LoggerAPI
+import SwiftKuery
+import SwiftKueryPostgreSQL
+import KituraRequest
+
+HeliumLogger.use()
+
+// Create a new router
+let router = Router()
+
+// Setup DB connections to use correct DB_URL depending on environment the project is run on.
+let DBHost: URL
+let defaultDBHost = "localhost"
+
+// Check if we are running on Heroku by requesting DB_URL from Herokus environment variables
+if let requestedHost = ProcessInfo.processInfo.environment["DATABASE_URL"] {
+    // There is an annoying bug in Kitura that requires us to make the postgress address coming from Heroku to have first letter as uppercase
+    var urlComp = URLComponents(string: requestedHost)
+    urlComp?.scheme = "Postgres"
+    
+    if let url = urlComp?.url {
+        DBHost = url
+    } else {
+        DBHost = URL(string: defaultDBHost)!
+    }
+    
+} else {
+    DBHost = URL(string: defaultDBHost)!
+}
+
+let connection = PostgreSQLConnection(url: DBHost)
+
+
+// Handle HTTP GET requests to /
+router.get("/") {
+    request, response, next in
+    response.send("Hello, World!")
+    next()
+}
+
+// Define app to use different port when used from Heroku.
+
+let port: Int
+let defaultPort = 8090
+
+if let herokuPort = ProcessInfo.processInfo.environment["PORT"] {
+    port = Int(herokuPort) ?? defaultPort
+} else {
+    port = defaultPort
+}
+
+// Add an HTTP server and connect it to the router
+Kitura.addHTTPServer(onPort: port, with: router)
+
+// Start the Kitura runloop (this call never returns)
+Kitura.run()
+
+```
+
+
     - Create function to create the chicken
     - Create function to fetch all the chikens
     - Create function to fetch one chicken?
