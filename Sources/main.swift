@@ -6,6 +6,13 @@ import SwiftKuery
 import SwiftKueryPostgreSQL
 import KituraRequest
 
+class ChickenTable: Table {
+    let tableName = "chickentable"
+
+    let name = Column("name")
+    let destiny = Column("destiny")
+}
+
 HeliumLogger.use()
 
 // Create a new router
@@ -51,10 +58,19 @@ router.get("/addchicken/:name/:destiny") {
             try response.status(.badRequest).end()
             return
     }
-    
+    let chickentable = ChickenTable()
 
-    response.send("Hi! My name is \(name) and when I grow up I'm going to be an \(destiny)!")
-    next()
+    let insertQuery = Insert(into: chickentable, values: name, destiny)
+
+    connection.execute(query: insertQuery, onCompletion: { result in
+        if result.success {
+            response.send("We are DONE! \(result.asValue)")
+        }
+        next()
+    })
+
+    //response.send("Hi! My name is \(name) and when I grow up I'm going to be an \(destiny)!")
+   // next()
 }
 
 // Define app to use different port when used from Heroku.
