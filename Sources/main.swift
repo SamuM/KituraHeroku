@@ -27,7 +27,7 @@ if let requestedHost = ProcessInfo.processInfo.environment["DATABASE_URL"] {
     // There is an annoying bug in Kitura that requires us to make the postgress address coming from Heroku to have first letter as uppercase
     var urlComp = URLComponents(string: requestedHost)
     urlComp?.scheme = "Postgres"
-    
+    Log.debug(requestedHost)
     if let url = urlComp?.url {
         DBHost = url
     } else {
@@ -37,7 +37,7 @@ if let requestedHost = ProcessInfo.processInfo.environment["DATABASE_URL"] {
 } else {
     DBHost = URL(string: defaultDBHost)!
 }
-
+Log.debug(DBHost)
 let connection = PostgreSQLConnection(url: DBHost)
 
 
@@ -53,7 +53,7 @@ router.get("/addchicken/:name/:destiny") {
 
     guard let name = request.parameters["name"],
         let destiny = request.parameters["destiny"] else {
-
+            
             Log.error("No parameters found")
             try response.status(.badRequest).end()
             return
@@ -61,11 +61,12 @@ router.get("/addchicken/:name/:destiny") {
     let chickentable = ChickenTable()
 
     let insertQuery = Insert(into: chickentable, values: name, destiny)
-
+    
     connection.execute(query: insertQuery, onCompletion: { result in
         if result.success {
             response.send("We are DONE! \(result.asValue)")
         }
+        Log.debug(result.asError)
         next()
     })
 
