@@ -37,7 +37,7 @@ if let requestedHost = ProcessInfo.processInfo.environment["DATABASE_URL"] {
 } else {
     DBHost = URL(string: defaultDBHost)!
 }
-Log.debug(DBHost.absoluteURL)
+Log.debug("\(DBHost.absoluteURL)")
 let connection = PostgreSQLConnection(url: DBHost)
 
 
