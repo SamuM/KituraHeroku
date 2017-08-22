@@ -37,7 +37,7 @@ if let requestedHost = ProcessInfo.processInfo.environment["DATABASE_URL"] {
 } else {
     DBHost = URL(string: defaultDBHost)!
 }
-Log.debug(DBHost)
+Log.debug(DBHost.absoluteURL)
 let connection = PostgreSQLConnection(url: DBHost)
 
 
@@ -64,9 +64,9 @@ router.get("/addchicken/:name/:destiny") {
     
     connection.execute(query: insertQuery, onCompletion: { result in
         if result.success {
-            response.send("We are DONE! \(result.asValue)")
+            response.send("We are DONE! \(result.asValue ?? "no value")")
         }
-        Log.debug(result.asError)
+        Log.debug("\(String(describing: result.asError))")
         next()
     })
 
