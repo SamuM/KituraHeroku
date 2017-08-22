@@ -59,9 +59,9 @@ Kitura.addHTTPServer(onPort: 8090, with: router)
 Kitura.run()
 ```
 
-- If you generated the Xcode project file you can run the code on Xcode by opening the project and running the target that looks like a Terminal icon on 'My Mac'. After Xcode finishesh building and compiling you can open a new browser window and navigate to http://localhost:8080/ that should display your 'Hello World!' text. 
+- If you generated the Xcode project file you can run the code on Xcode by opening the project and running the target that looks like a Terminal icon on 'My Mac'. After Xcode finishesh building and compiling you can open a new browser window and navigate to http://localhost:8090/ that should display your 'Hello World!' text. 
 
-- You can also run the project from Terminal. In Terminal run ```swift build```. That obviously builds the project. Then run the file that is named after your project from ```.build/debug/<projectName>```. For example I would run my project like this ```.build/debug/KituraHeroku```. After Kitura starting you can navigate to http://localhost:8080/ just like with instance started  by Xcode.
+- You can also run the project from Terminal. In Terminal run ```swift build```. That obviously builds the project. Then run the file that is named after your project from ```.build/debug/<projectName>```. For example I would run my project like this ```.build/debug/KituraHeroku```. After Kitura starting you can navigate to http://localhost:8090/ just like with instance started  by Xcode.
 
 ## Heroku integration
 
