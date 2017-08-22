@@ -62,7 +62,8 @@ router.get("/addchicken/:name/:destiny") {
                 }
                 let chickentable = ChickenTable()
                 
-                let insertQuery = Insert(into: chickentable, values: name, destiny)
+                let insertQuery = Insert(into: chickentable, values: nil, name, destiny)
+                
                 
                 connection.execute(query: insertQuery, onCompletion: { result in
                     if result.success {
