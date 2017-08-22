@@ -140,6 +140,7 @@ Now that we have the Database set up and have created our table we can start usi
 
 Lets add few new imports from Packages that we already added to the project. Add these to the Main.swift files imports:
 ```swift
+import LoggerAPI
 import SwiftKuery
 import SwiftKueryPostgreSQL
 import KituraRequest
@@ -147,7 +148,7 @@ import KituraRequest
 
 Then we are going to add some logging with HeliumLogger package that we already have added to the project. Add this line of code to the Main.swift file right at the top after the imports.
 ```swift
-HeliumLogger.user()
+HeliumLogger.use()
 ```
 If you are using the Xcode you should see the autocomplete working just like with regular projects.
 If you now build and run the project you can see that we have some more verbose information coming from the server.
