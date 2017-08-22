@@ -1,10 +1,13 @@
 # Kitura–Heroku–PostgreSQL
 
 ## Requirements
+- This tutorial is targeted for OS X users
 - Follow instructions to install Kitura: http://www.kitura.io/en/starter/settingup.html
 - And the Hello World project: http://www.kitura.io/en/starter/gettingstarted.html
 - If not already, signup for free tier Heroku account: https://www.heroku.com/
 - Follow instructions to install Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli
+- Homebrew installed: https://brew.sh/
+- In order to be able to build the final project you need to have PostgreSQL installed on your computer. I recommend installing it through Homebrew. Run this ```brew install postgresql```in your terminal.
 
 ## Setting up the basic project
 
