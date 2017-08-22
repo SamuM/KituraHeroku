@@ -1,10 +1,13 @@
 # Kitura–Heroku–PostgreSQL
 
 ## Requirements
+- This tutorial is targeted for OS X users
 - Follow instructions to install Kitura: http://www.kitura.io/en/starter/settingup.html
 - And the Hello World project: http://www.kitura.io/en/starter/gettingstarted.html
 - If not already, signup for free tier Heroku account: https://www.heroku.com/
 - Follow instructions to install Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli
+- Homebrew installed: https://brew.sh/
+- In order to be able to build the final project you need to have PostgreSQL installed on your computer. I recommend installing it through Homebrew. Run this ```brew install postgresql```in your terminal.
 
 ## Setting up the basic project
 
@@ -50,15 +53,15 @@ router.get("/") {
 }
 
 // Add an HTTP server and connect it to the router
-Kitura.addHTTPServer(onPort: 8080, with: router)
+Kitura.addHTTPServer(onPort: 8090, with: router)
 
 // Start the Kitura runloop (this call never returns)
 Kitura.run()
 ```
 
-- If you generated the Xcode project file you can run the code on Xcode by opening the project and running the target that looks like a Terminal icon on 'My Mac'. After Xcode finishesh building and compiling you can open a new browser window and navigate to http://localhost:8080/ that should display your 'Hello World!' text. 
+- If you generated the Xcode project file you can run the code on Xcode by opening the project and running the target that looks like a Terminal icon on 'My Mac'. After Xcode finishesh building and compiling you can open a new browser window and navigate to http://localhost:8090/ that should display your 'Hello World!' text. 
 
-- You can also run the project from Terminal. In Terminal run ```swift build```. That obviously builds the project. Then run the file that is named after your project from ```.build/debug/<projectName>```. For example I would run my project like this ```.build/debug/KituraHeroku```. After Kitura starting you can navigate to http://localhost:8080/ just like with instance started  by Xcode.
+- You can also run the project from Terminal. In Terminal run ```swift build```. That obviously builds the project. Then run the file that is named after your project from ```.build/debug/<projectName>```. For example I would run my project like this ```.build/debug/KituraHeroku```. After Kitura starting you can navigate to http://localhost:8090/ just like with instance started  by Xcode.
 
 ## Heroku integration
 
@@ -93,7 +96,7 @@ router.get("/") {
 // Define app to use different port when used from Heroku.
 
 let port: Int
-let defaultPort = 8080
+let defaultPort = 8090
 
 if let herokuPort = ProcessInfo.processInfo.environment["PORT"] {
     port = Int(herokuPort) ?? defaultPort
@@ -131,9 +134,93 @@ Now that we have our app running in Heroku we can concentrate on developing it f
 CREATE TABLE chickentable (id SERIAL, name varchar(256) NOT NULL, destiny varchar(256) NOT NULL);
 ```
 
-- Edit Main.Swift file
+## Working with the PostgreSQL
 
-    - Establish PostgreSQL Connection
+Now that we have the Database set up and have created our table we can start using it.
+
+Lets add few new imports from Packages that we already added to the project. Add these to the Main.swift files imports:
+```swift
+import LoggerAPI
+import SwiftKuery
+import SwiftKueryPostgreSQL
+import KituraRequest
+```
+
+Then we are going to add some logging with HeliumLogger package that we already have added to the project. Add this line of code to the Main.swift file right at the top after the imports.
+```swift
+HeliumLogger.use()
+```
+If you are using the Xcode you should see the autocomplete working just like with regular projects.
+If you now build and run the project you can see that we have some more verbose information coming from the server.
+
+Next we will set up the project so that we can connect to local or remote Heroku database depending on where the application is running.
+
+Modifie your Main.swift file to look like this:
+
+```swift
+import Foundation
+import Kitura
+import HeliumLogger
+import LoggerAPI
+import SwiftKuery
+import SwiftKueryPostgreSQL
+import KituraRequest
+
+HeliumLogger.use()
+
+// Create a new router
+let router = Router()
+
+// Setup DB connections to use correct DB_URL depending on environment the project is run on.
+let DBHost: URL
+let defaultDBHost = "localhost"
+
+// Check if we are running on Heroku by requesting DB_URL from Herokus environment variables
+if let requestedHost = ProcessInfo.processInfo.environment["DATABASE_URL"] {
+    // There is an annoying bug in Kitura that requires us to make the postgress address coming from Heroku to have first letter as uppercase
+    var urlComp = URLComponents(string: requestedHost)
+    urlComp?.scheme = "Postgres"
+    
+    if let url = urlComp?.url {
+        DBHost = url
+    } else {
+        DBHost = URL(string: defaultDBHost)!
+    }
+    
+} else {
+    DBHost = URL(string: defaultDBHost)!
+}
+
+let connection = PostgreSQLConnection(url: DBHost)
+
+
+// Handle HTTP GET requests to /
+router.get("/") {
+    request, response, next in
+    response.send("Hello, World!")
+    next()
+}
+
+// Define app to use different port when used from Heroku.
+
+let port: Int
+let defaultPort = 8090
+
+if let herokuPort = ProcessInfo.processInfo.environment["PORT"] {
+    port = Int(herokuPort) ?? defaultPort
+} else {
+    port = defaultPort
+}
+
+// Add an HTTP server and connect it to the router
+Kitura.addHTTPServer(onPort: port, with: router)
+
+// Start the Kitura runloop (this call never returns)
+Kitura.run()
+
+```
+
+
     - Create function to create the chicken
     - Create function to fetch all the chikens
     - Create function to fetch one chicken?
