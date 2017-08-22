@@ -53,7 +53,7 @@ router.get("/") {
 }
 
 // Add an HTTP server and connect it to the router
-Kitura.addHTTPServer(onPort: 8080, with: router)
+Kitura.addHTTPServer(onPort: 8090, with: router)
 
 // Start the Kitura runloop (this call never returns)
 Kitura.run()
@@ -96,7 +96,7 @@ router.get("/") {
 // Define app to use different port when used from Heroku.
 
 let port: Int
-let defaultPort = 8080
+let defaultPort = 8090
 
 if let herokuPort = ProcessInfo.processInfo.environment["PORT"] {
     port = Int(herokuPort) ?? defaultPort
