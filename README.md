@@ -134,6 +134,24 @@ Now that we have our app running in Heroku we can concentrate on developing it f
 CREATE TABLE chickentable (id SERIAL, name varchar(256) NOT NULL, destiny varchar(256) NOT NULL);
 ```
 
+## Working with the PostgreSQL
+
+Now that we have the Database set up and have created our table we can start using it.
+
+Lets add few new imports from Packages that we already added to the project. Add these to the Main.swift files imports:
+```swift
+import SwiftKuery
+import SwiftKueryPostgreSQL
+import KituraRequest
+```
+
+Then we are going to add some logging with HeliumLogger package that we already have added to the project. Add this line of code to the Main.swift file right at the top after the imports.
+```swift
+HeliumLogger.user()
+```
+If you are using the Xcode you should see the autocomplete working just like with regular projects.
+If you now build and run the project you can see that we have some more verbose information coming from the server.
+
 - Edit Main.Swift file
 
     - Establish PostgreSQL Connection
