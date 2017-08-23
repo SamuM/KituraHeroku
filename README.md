@@ -220,8 +220,46 @@ Kitura.run()
 
 ```
 
+Next we will establish connection to our database and create an simple insert query to add rows to the database table. Add the below code after the ```router.get("/")```-block.
+```swift
+router.get("/addchicken/:name/:destiny") {
+    request, response, next in
 
-    - Create function to create the chicken
-    - Create function to fetch all the chikens
+    // To properly handle DB connections you should create an connection pool for it. Source code can be found here: https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL/blob/master/Sources/SwiftKueryPostgreSQL/PostgreSQLConnection.swift
+    connection.connect { error in
+        if let error = error {
+            Log.error("Connection error: \(error)")
+            next()
+        } else {
+            guard let name = request.parameters["name"],
+                let destiny = request.parameters["destiny"] else {
+                    
+                    Log.error("No parameters found")
+                    return
+            }
+
+            let chickentable = ChickenTable()
+
+            // Create an InsertQuery and add values to the fields using Tuples
+            let insertQuery = Insert(into: chickentable, valueTuples: (chickentable.name, name), (chickentable.destiny, destiny))
+
+            connection.execute(query: insertQuery, onCompletion: { result in
+                if result.success {
+                    response.send("Data added!")
+                }
+                response.send("Error: \(String(describing: result.asError))")
+                Log.error("\(String(describing: result.asError))")
+                next()
+            })
+
+        }
+        // Close connection to DB
+        connection.closeConnection()
+    }
+
+}
+
+```
+    - Create function to fetch all the chikens
     - Create function to fetch one chicken?
     - Push to Heroku and emonstrate the results
