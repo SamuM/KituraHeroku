@@ -128,10 +128,10 @@ Using the CLI lets follow the Herokus own instructions on the page.
 Now that we have our app running in Heroku we can concentrate on developing it further, meaning next we will add PostgreSQL to it. And this we will do from the Heroku dashboard.
 
 - Navigate to your Heroku dashboard https://dashboard.heroku.com and open your Kitura running application.
-- Open ```Resources``` tab from the project navigation adn type ```postgres```on the 'Add-ons' search box and Select 'Heroku Postgres'. Choose the free tier Hobby Dev plan and add it to the project.
+- Open 'Resources' tab from the project navigation. On the 'Add-ons' selection search for 'Heroku Postgres'. Choose the free tier Hobby Dev plan and add it to the project.
 - Click the newly added database to open its controll panel in a new tab.
-- Scroll down to 'ADMINISTRATION' and click 'Database Credentials'.
-- Copy the heroku command labeled 'Heroku CLI'. This command logs us in to our newly created Database.
+- On the database admin panel ccroll down to 'ADMINISTRATION' and click 'Database Credentials'.
+- Copy the command script labeled 'Heroku CLI'. This command logs us in to our newly created Database.
 - Open new tab in Terminal and paste & run the command.
 - Now we can run queries and such to the Database. For now we are going to create our first table.
 - Run this command to create our table for chickens: 
@@ -160,7 +160,7 @@ If you now build and run the project you can see that we have some more verbose 
 
 Next we will set up the project so that we can connect to local or remote Heroku database depending on where the application is running.
 
-Modifie your Main.swift file to look like this:
+Modify your Main.swift file to look like this:
 
 ```swift
 import Foundation
@@ -265,7 +265,7 @@ router.get("/addchicken/:name/:destiny") {
 }
 ```
 
-At this point we can test out our app that everything is working fine. Do a ```git commit -am "comment here"```and after taht push to heroku with ```git push heroku master```. This deploys the application to Heroku. When its done type ```heroku open```on terminal an navigate to ```/addchicken/Frank/McNugget``` to test out the app.
+Now we can test out our app to ensure that everything is working fine. Do a ```git commit -am "comment here"```and after that push to heroku with ```git push heroku master```. This deploys the application to Heroku. When its done type ```heroku open```on terminal an navigate to ```/addchicken/Frank/McNugget``` to test out the app.
 
 Next we will create a simple query to fetch out the data on all of the chickens.
 
@@ -311,6 +311,6 @@ router.get("/chickens") {
 }
 ```
 
-Commit and push the code to Heroku and try our new ```/chickens``` endpoint. YOu should see an raw representation of our data.
+Commit and push the code to Heroku and try our new ```/chickens``` endpoint. You should see an raw representation of our data.
 
 
