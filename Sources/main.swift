@@ -101,7 +101,15 @@ router.get("/chickens") {
             
             connection.execute(query: selectQuery, onCompletion: { result in
                 if result.success {
-                    response.send("Here is the data: \(result.asValue ?? "no asValue") \n \(String(describing: result.asResultSet)) \n \(String(describing: result.asRows))")
+                    
+                    if let resultSet = result.asResultSet {
+                        var resultString: String = ""
+                        for row in resultSet.rows {
+                            resultString += "\(row) \n"
+                        }
+                        response.send("Here is the data: \n \(resultString))")
+                    }
+                    
                 }
                 response.send("Error: \(String(describing: result.asError))")
                 Log.error("\(String(describing: result.asError))")
