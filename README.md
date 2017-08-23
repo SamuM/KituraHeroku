@@ -225,7 +225,7 @@ Next we will establish connection to our database and create an simple insert qu
 router.get("/addchicken/:name/:destiny") {
     request, response, next in
 
-    // To properly handle DB connections you should create an connection pool for it. Source code can be found here: https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL/blob/master/Sources/SwiftKueryPostgreSQL/PostgreSQLConnection.swift
+    // To properly handle DB connections you should create an connection pool for it. https://github.com/IBM-Swift/Swift-Kuery
     connection.connect { error in
         if let error = error {
             Log.error("Connection error: \(error)")
@@ -253,12 +253,11 @@ router.get("/addchicken/:name/:destiny") {
             })
 
         }
-        // Close connection to DB
+        // Close connection to DB since we are not using connection pooling
         connection.closeConnection()
     }
 
 }
-
 ```
     - Create function to fetch all the chikens
     - Create function to fetch one chicken?
