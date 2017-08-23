@@ -259,6 +259,13 @@ router.get("/addchicken/:name/:destiny") {
 
 }
 ```
-    - Create function to fetch all the chikens
-    - Create function to fetch one chicken?
-    - Push to Heroku and emonstrate the results
+
+At this point we can test out our app that everything is working fine. Do a ```git commit -am "comment here"```and after taht push to heroku with ```git push heroku master```. This deploys the application to Heroku. When its done type ```heroku open```on terminal an navigate to ```/addchicken/Frank/McNugget``` to test out the app.
+
+Next we will create a simple query to fetch out the data on all of the chickens.
+
+Add this piece of code after the last block:
+
+```swift
+
+
