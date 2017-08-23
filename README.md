@@ -267,5 +267,45 @@ Next we will create a simple query to fetch out the data on all of the chickens.
 Add this piece of code after the last block:
 
 ```swift
+router.get("/chickens") {
+    request, response, next in
+    
+    connection.connect { error in
+        if let error = error {
+            Log.error("Connection error: \(error)")
+            next()
+        } else {
+            
+            let chickentable = ChickenTable()
+            
+            // Create an InsertQuery and add values to the fields using Tuples
+            let selectQuery = Select([chickentable.name, chickentable.destiny], from: chickentable)
+            
+            connection.execute(query: selectQuery, onCompletion: { result in
+                if result.success {
+                    
+                    if let resultSet = result.asResultSet {
+                        var resultString: String = ""
+                        for row in resultSet.rows {
+                            resultString += "\(row)\n"
+                        }
+                        response.send("Here is the data: \n \(resultString))")
+                    }
+                    
+                }
+                response.send("Error: \(String(describing: result.asError))")
+                Log.error("\(String(describing: result.asError))")
+                next()
+            })
+            
+        }
+        // Close connection to DB since we are not using connection pooling
+        connection.closeConnection()
+    }
+    
+}
+```
+
+Commit and push the code to Heroku and try our new ```/chickens``` endpoint. YOu should see an raw representation of our data.
 
 
