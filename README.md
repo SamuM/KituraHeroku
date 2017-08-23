@@ -234,8 +234,8 @@ router.get("/addchicken/:name/:destiny") {
             guard let name = request.parameters["name"],
                 let destiny = request.parameters["destiny"] else {
                     
-                    Log.error("No parameters found")
-                    return
+                Log.error("No parameters found")
+                return
             }
 
             let chickentable = ChickenTable()
