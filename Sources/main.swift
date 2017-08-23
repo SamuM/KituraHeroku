@@ -105,7 +105,7 @@ router.get("/chickens") {
                     if let resultSet = result.asResultSet {
                         var resultString: String = ""
                         for row in resultSet.rows {
-                            resultString += "\(row) \n"
+                            resultString += "\(row)\n"
                         }
                         response.send("Here is the data: \n \(resultString))")
                     }
