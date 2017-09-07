@@ -1,11 +1,13 @@
-# Kitura–Heroku–PostgreSQL
+#Integrating Kitura with Heroku and PostgreSQL
+ 
+While I was deploying my Kitura application to Heroku, I encountered some small, but very annoying issues I had to solve to get my application running. This blog post aims to give you clear instructions how to get your Kitura-based application running in Heroku, especially with an integrated PostgreSQL database.
 
 ## Pre-Requirements
 - This tutorial is targeted for macOS users
 - Follow instructions to install Kitura: http://www.kitura.io/en/starter/settingup.html
 - Implement the Hello World project to ensure that everything works: http://www.kitura.io/en/starter/gettingstarted.html
-- Sign up for free-tier Heroku account: https://www.heroku.com/
-- Follow instructions to install Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli
+- Sign up for free-tier Heroku account to gain access to Herokus cloud hosting: https://www.heroku.com/
+- Follow instructions to install Heroku CLI, so we can deploy to Heroku straight from Terminal: https://devcenter.heroku.com/articles/heroku-cli
 - Homebrew installed: https://brew.sh/
 - In order to be able to build the final project you need to have PostgreSQL installed locally on your computer. I recommend installing it through Homebrew. Run this ```brew install postgresql``` in Terminal.
 
